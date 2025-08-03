@@ -16,6 +16,10 @@ validate_specs_directory() {
         echo "Error: Directory '$dir' does not exist"
         return 1
     fi
+    if [ ! -r "$dir" ] || [ ! -x "$dir" ]; then
+        echo "Error: Directory '$dir' is not accessible"
+        return 1
+    fi
     return 0
 }
 
@@ -25,11 +29,11 @@ check_specs_content() {
     local has_frontend=false
     local has_backend=false
     
-    if find "$specs_dir" -name "*.md" -exec grep -l -i "frontend\|ui\|web\|react\|vue\|angular" {} \; | head -1 > /dev/null; then
+    if find "$specs_dir" -name "*.md" -exec grep -l -i "frontend\|ui\|web\|react\|vue\|angular" {} \; 2>/dev/null | head -1 > /dev/null 2>&1; then
         has_frontend=true
     fi
     
-    if find "$specs_dir" -name "*.md" -exec grep -l -i "backend\|api\|server\|database" {} \; | head -1 > /dev/null; then
+    if find "$specs_dir" -name "*.md" -exec grep -l -i "backend\|api\|server\|database" {} \; 2>/dev/null | head -1 > /dev/null 2>&1; then
         has_backend=true
     fi
     
