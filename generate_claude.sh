@@ -194,7 +194,7 @@ while true; do
             fi
         done
         
-        teams+=("- A $specialty team (SME: $contact)")
+        teams+=("- A $specialty team (Subject Matter Expert from $contact)")
     fi
 done
 
@@ -217,7 +217,7 @@ read -p "Enter project timelines (e.g., Week 1-2: Planning, Week 3-4: Developmen
 echo
 echo "Generating CLAUDE.md..."
 
-cat > CLAUDE.md << EOF
+cat > "$SPECS_DIRECTORY/CLAUDE.md" << EOF
 The specs are located in $SPECS_DIRECTORY
 
 Create: $TEAMS
@@ -230,4 +230,4 @@ Schedule:
 Timeline: [$TIMELINES]
 EOF
 
-echo "✓ CLAUDE.md has been generated successfully!"
+echo "✓ CLAUDE.md has been generated successfully in $SPECS_DIRECTORY!"
