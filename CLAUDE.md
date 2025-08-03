@@ -27,8 +27,8 @@ Timeline: [$TIMELINES]
 - Following are the rules for TEAMS
 -- General rules: team should have PM, Dev, Tester, Doc
 -- Look up for specific spec files in $SPECS_DIRECTORY directory
--- If frontend_spec.md exists, apps will provide frontend programming language options (React, Vue, Angular, Svelte, Next.js, Nuxt.js, Vanilla JavaScript, Other)
--- If backend_spec.md exists, apps will provide backend programming language options (Node.js/Express, Python/Django, Python/FastAPI, Java/Spring Boot, C#/.NET, Go, Ruby on Rails, PHP/Laravel, Other)
+-- If frontend_spec.md exists, apps will auto-detect frontend technology by scanning the file for keywords (React, Vue, Angular, Svelte, Next.js, Nuxt.js, Vanilla JavaScript). If detected, ask for confirmation. If not detected or not confirmed, provide manual selection options.
+-- If backend_spec.md exists, apps will auto-detect backend technology by scanning the file for keywords (Node.js/Express, Python/Django, Python/FastAPI, Java/Spring Boot, C#/.NET, Go, Ruby on Rails, PHP/Laravel). If detected, ask for confirmation. If not detected or not confirmed, provide manual selection options.
 -- If both frontend_spec.md and backend_spec.md exist, there will be integration test team
 -- Apps will asked documentation team, is it necessary or not
 -- Apps will asked either we will have another team again or not. 
