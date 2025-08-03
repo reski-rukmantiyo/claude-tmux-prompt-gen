@@ -1,5 +1,5 @@
-Create bash application that will asked for  every variables in below template.
-The output will be file CLAUDE.md 
+Create bash application that will asked for every variables in below template.
+The output will be file CLAUDE.md located in the specs directory.
 
 Following are the data
 1. Template: following are the content of the CLAUDE.md
@@ -17,26 +17,28 @@ Timeline: [$TIMELINES]
 ```
 
 2. Variables will be replace inside CLAUDE.md
-- SPECS_DIRECTORY : text only. Apps will validate is it empty or location is not valid
+- SPECS_DIRECTORY : text only. Apps will validate is it empty, location is not valid, or not accessible. If it's have any kind of error, then it will loop and asked same question again. 
+- Apps must check for required spec files: main_spec.md, frontend_spec.md, backend_spec.md, integration_spec.md. If any file is missing, exit with error.
 
 - Following are the rules for TEAMS
 -- General rules: team should have PM, Dev, Tester, Doc
--- Look up for specs markdown in $SPEC_DIRECTORY directory
--- If there's frontend, therefore apps will be asked for what kind frontend programming language 
--- If there's backend, therefore apps will be asked for what kind of backend programming language
--- If there's backend and frontend, there will be integration test team
+-- Look up for specific spec files in $SPECS_DIRECTORY directory
+-- If frontend_spec.md exists, apps will provide frontend programming language options (React, Vue, Angular, Svelte, Next.js, Nuxt.js, Vanilla JavaScript, Other)
+-- If backend_spec.md exists, apps will provide backend programming language options (Node.js/Express, Python/Django, Python/FastAPI, Java/Spring Boot, C#/.NET, Go, Ruby on Rails, PHP/Laravel, Other)
+-- If both frontend_spec.md and backend_spec.md exist, there will be integration test team
 -- Apps will asked documentation team, is it necessary or not
 -- Apps will asked either we will have another team again or not. 
 --- This will be like loop of array 
 --- apps will asked about what speciality in the team
---- does it have developer or not? If yes, will follow general rules for team. If not, it will only act as Subject Matter Expert. You need to asked whose direct contact of this team
+--- does it have developer or not? If yes, will follow general rules for team. If not, it will only act as Subject Matter Expert from available teams (Frontend, Backend, Integration - excluding Documentation team)
 -- Example of TEAM variable
 
 ```
-- A frontend team (PM, Dev, UI Tester)
-- A backend team (PM, Dev, API Tester)
-- A integration team (PM, Dev, API Tester)
-- An Auth team (PM, Dev)
+- A frontend team (PM, Dev using React, UI Tester)
+- A backend team (PM, Dev using Node.js/Express, API Tester)
+- An integration team (PM, Dev, Integration Tester)
+- A documentation team (PM, Technical Writer)
+- A [custom specialty] team (Subject Matter Expert from [chosen team])
 ```
 
-- variable that have $TIME prefix should have asked one by one
+- Variables that have $TIME prefix should be asked one by one
