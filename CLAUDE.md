@@ -18,7 +18,11 @@ Timeline: [$TIMELINES]
 
 2. Variables will be replace inside CLAUDE.md
 - SPECS_DIRECTORY : text only. Apps will validate is it empty, location is not valid, or not accessible. If it's have any kind of error, then it will loop and asked same question again. 
-- Apps must check for required spec files: main_spec.md, frontend_spec.md, backend_spec.md, integration_spec.md. If any file is missing, exit with error.
+- Apps must check for required spec files: 
+  -- main_spec.md (always required)
+  -- integration_spec.md (always required)
+  -- At least one of frontend_spec.md OR backend_spec.md (or both)
+  -- If any required file is missing, exit with error.
 
 - Following are the rules for TEAMS
 -- General rules: team should have PM, Dev, Tester, Doc
