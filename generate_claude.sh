@@ -359,11 +359,11 @@ read -p "Orchestrator sync duration (minutes): " TIME_ORCHESTRATOR
 echo
 read -p "Enter project timelines (e.g., Week 1-2: Planning, Week 3-4: Development): " TIMELINES
 
-# Generate CLAUDE.md
+# Generate prompt.md
 echo
-echo "Generating CLAUDE.md..."
+echo "Generating prompt.md..."
 
-cat > "$SPECS_DIRECTORY/CLAUDE.md" << EOF
+cat > "$SPECS_DIRECTORY/prompt.md" << EOF
 The specs are located in $SPECS_DIRECTORY
 
 Create: $TEAMS
@@ -376,4 +376,4 @@ Schedule:
 Timeline: [$TIMELINES]
 EOF
 
-echo "✓ CLAUDE.md has been generated successfully in $SPECS_DIRECTORY!"
+echo "✓ prompt.md has been generated successfully in $SPECS_DIRECTORY!"
