@@ -49,15 +49,18 @@ validate_specs_directory() {
         exit 1
     fi
     
-    if [ ! -f "$dir/integration_spec.md" ]; then
-        echo "Error: integration_spec.md is required"
-        exit 1
-    fi
-    
     # Check that at least frontend_spec.md OR backend_spec.md exists
     if [ ! -f "$dir/frontend_spec.md" ] && [ ! -f "$dir/backend_spec.md" ]; then
         echo "Error: You must have at least frontend_spec.md or backend_spec.md (or both)"
         exit 1
+    fi
+    
+    # Check integration_spec.md only if both frontend and backend exist
+    if [ -f "$dir/frontend_spec.md" ] && [ -f "$dir/backend_spec.md" ]; then
+        if [ ! -f "$dir/integration_spec.md" ]; then
+            echo "Error: integration_spec.md is required when both frontend_spec.md and backend_spec.md exist"
+            exit 1
+        fi
     fi
     
     return 0
