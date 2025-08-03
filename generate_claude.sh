@@ -121,6 +121,30 @@ check_specs_content() {
     echo "$has_frontend,$has_backend"
 }
 
+# Get ROOT_DIRECTORY with validation (loop until valid)
+while true; do
+    read -p "Enter root directory path: " ROOT_DIRECTORY
+    if [ -z "$ROOT_DIRECTORY" ]; then
+        echo "Error: Root directory cannot be empty"
+        echo "Please try again."
+        continue
+    fi
+    if [ ! -d "$ROOT_DIRECTORY" ]; then
+        echo "Error: Directory '$ROOT_DIRECTORY' does not exist"
+        echo "Please try again."
+        continue
+    fi
+    if [ ! -r "$ROOT_DIRECTORY" ] || [ ! -x "$ROOT_DIRECTORY" ]; then
+        echo "Error: Directory '$ROOT_DIRECTORY' is not accessible"
+        echo "Please try again."
+        continue
+    fi
+    
+    # Remove trailing slash if present
+    ROOT_DIRECTORY=${ROOT_DIRECTORY%/}
+    break
+done
+
 # Get SPECS_DIRECTORY with validation (loop until valid)
 while true; do
     read -p "Enter specs directory path: " SPECS_DIRECTORY
@@ -208,7 +232,7 @@ if [ "$has_frontend" = "true" ]; then
         done
     fi
     
-    teams+=("- A frontend team (PM, Dev using $frontend_lang, UI Tester)")
+    teams+=("- A frontend team (PM, Dev using $frontend_lang, UI Tester) - Location: $ROOT_DIRECTORY/frontend")
 fi
 
 # Backend team
@@ -279,18 +303,18 @@ if [ "$has_backend" = "true" ]; then
         done
     fi
     
-    teams+=("- A backend team (PM, Dev using $backend_lang, API Tester)")
+    teams+=("- A backend team (PM, Dev using $backend_lang, API Tester) - Location: $ROOT_DIRECTORY/backend")
 fi
 
 # Integration team if both frontend and backend
 if [ "$has_frontend" = "true" ] && [ "$has_backend" = "true" ]; then
-    teams+=("- An integration team (PM, Dev, Integration Tester)")
+    teams+=("- An integration team (PM, Dev, Integration Tester) - Location: $ROOT_DIRECTORY/integration")
 fi
 
 # Documentation team
 read -p "Is documentation team necessary? (y/n): " doc_needed
 if [[ "$doc_needed" =~ ^[Yy]$ ]]; then
-    teams+=("- A documentation team (PM, Technical Writer)")
+    teams+=("- A documentation team (PM, Technical Writer) - Location: $ROOT_DIRECTORY/documentation")
 fi
 
 # Additional teams loop
@@ -305,7 +329,8 @@ while true; do
     read -p "Does this team have developers? (y/n): " has_devs
     
     if [[ "$has_devs" =~ ^[Yy]$ ]]; then
-        teams+=("- A $specialty team (PM, Dev, Tester)")
+        team_location=$(echo "$specialty" | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g')
+        teams+=("- A $specialty team (PM, Dev, Tester) - Location: $ROOT_DIRECTORY/$team_location")
     else
         # Show available teams (excluding documentation team)
         echo "Available teams for direct contact:"
@@ -340,7 +365,8 @@ while true; do
             fi
         done
         
-        teams+=("- A $specialty team (Subject Matter Expert from $contact)")
+        team_location=$(echo "$specialty" | tr '[:upper:]' '[:lower:]' | sed 's/ /_/g')
+        teams+=("- A $specialty team (Subject Matter Expert from $contact) - Location: $ROOT_DIRECTORY/$team_location")
     fi
 done
 
@@ -364,9 +390,12 @@ echo
 echo "Generating prompt.md..."
 
 cat > "$SPECS_DIRECTORY/prompt.md" << EOF
+Root folder are located in $ROOT_DIRECTORY
 The specs are located in $SPECS_DIRECTORY
 
-Create: $TEAMS
+Create:
+$TEAMS
+
 Schedule:
 - $TIME_PM-minute check-ins with PMs
 - $TIME_DEV-minute commits from devs

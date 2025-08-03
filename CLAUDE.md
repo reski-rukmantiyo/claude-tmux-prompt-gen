@@ -4,6 +4,7 @@ The output will be file prompt.md located in the specs directory.
 Following are the data
 1. Template: following are the content of the CLAUDE.md
 ```
+Root folder are located in $ROOT_DIRECTORY
 The specs are located in $SPECS_DIRECTORY
 
 Create: $TEAMS
@@ -18,6 +19,7 @@ Timeline: [$TIMELINES]
 
 2. Variables will be replace inside CLAUDE.md
 - SPECS_DIRECTORY : text only. Apps will validate is it empty, location is not valid, or not accessible. If it's have any kind of error, then it will loop and asked same question again. 
+- ROOT_DIRECTORY: same specification with SPECS_DIRECTORY
 - Apps must check for required spec files: 
   -- main_spec.md (always required)
   -- integration_spec.md (always required)
@@ -35,6 +37,7 @@ Timeline: [$TIMELINES]
 --- This will be like loop of array 
 --- apps will asked about what speciality in the team
 --- does it have developer or not? If yes, will follow general rules for team. If not, it will only act as Subject Matter Expert from available teams (Frontend, Backend, Integration - excluding Documentation team)
+-- Location for each team is in $ROOT/TEAM_NAME
 -- Example of TEAM variable
 
 ```
