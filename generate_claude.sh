@@ -22,13 +22,21 @@ validate_specs_directory() {
     fi
     
     # Check for required spec files
-    local required_files=("main_spec.md" "frontend_spec.md" "backend_spec.md" "integration_spec.md")
-    for file in "${required_files[@]}"; do
-        if [ ! -f "$dir/$file" ]; then
-            echo "Error: You must have all md spec files (main_spec.md, frontend_spec.md, backend_spec.md, integration_spec.md)"
-            exit 1
-        fi
-    done
+    if [ ! -f "$dir/main_spec.md" ]; then
+        echo "Error: main_spec.md is required"
+        exit 1
+    fi
+    
+    if [ ! -f "$dir/integration_spec.md" ]; then
+        echo "Error: integration_spec.md is required"
+        exit 1
+    fi
+    
+    # Check that at least frontend_spec.md OR backend_spec.md exists
+    if [ ! -f "$dir/frontend_spec.md" ] && [ ! -f "$dir/backend_spec.md" ]; then
+        echo "Error: You must have at least frontend_spec.md or backend_spec.md (or both)"
+        exit 1
+    fi
     
     return 0
 }
