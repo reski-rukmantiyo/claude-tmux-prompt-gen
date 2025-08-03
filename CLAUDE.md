@@ -1,5 +1,5 @@
 Create bash application that will asked for every variables in below template.
-The output will be file CLAUDE.md located in the specs directory.
+The output will be file prompt.md located in the specs directory.
 
 Following are the data
 1. Template: following are the content of the CLAUDE.md
